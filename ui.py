@@ -5,6 +5,7 @@ from tkinter import ttk
 import customtkinter
 from customtkinter import *
 from PIL import ImageTk, Image
+import main
 
 grey_one = '#222222'
 grey_two = '#333333'
@@ -21,30 +22,68 @@ root.geometry('1300x750+370+160')
 root.configure(bg=grey_one)
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
-# ENTRY FRAME
 
 question_var = tkinter.StringVar(value="Question")
 
 question_label = customtkinter.CTkLabel(
     master=root,
     textvariable=question_var,
-    width=120,
-    height=25,
+    width=400,
+    height=50,
     text_color="white",
     corner_radius=8
 )
-question_label.place(relx=0.5,rely=0.5,anchor=tkinter.CENTER)
+question_label.place(x=100, y=100)
 
 
 questionEntry = customtkinter.CTkEntry(
     master=root, 
     placeholder_text="Enter Your Question Here",
-    width=120,
-    height=25,
+    width=400,
+    height=50,
     border_width=2,
     corner_radius=10
     )
-questionEntry.place(relx=0.25, rely=0.25, anchor=tkinter.CENTER)
+questionEntry.place(x=100, y=150)
+# -------------------------------------------------------------------------------------------------------------------------------------------------
+
+answer_var = tkinter.StringVar(value="Answer")
+
+answer_label = customtkinter.CTkLabel(
+    master=root,
+    textvariable=answer_var,
+    width=400,
+    height=50,
+    text_color="white",
+    corner_radius=8
+)
+answer_label.place(x=100, y=250)
+
+
+answerEntry = customtkinter.CTkEntry(
+    master=root, 
+    placeholder_text="Enter Your Answer Here",
+    width=400,
+    height=50,
+    border_width=2,
+    corner_radius=10
+    )
+answerEntry.place(x=100, y=300)
+
+
+# -------------------------------------------------------------------------------------------------------------------------------------------------
+# ADD BUTTON
+
+add_button = customtkinter.CTkButton(
+    master=root,
+    width=120,
+    height=32,
+    border_width=0,
+    corner_radius=8,
+    text="Add",    
+    command=main.addButton
+)
+add_button.place(x=100, y=400)
 
 
 
