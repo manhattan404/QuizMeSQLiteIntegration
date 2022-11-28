@@ -45,6 +45,7 @@ questionEntry = customtkinter.CTkEntry(
     corner_radius=10
     )
 questionEntry.place(x=100, y=150)
+
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
 answer_var = tkinter.StringVar(value="Answer")
