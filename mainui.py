@@ -5,6 +5,7 @@ from tkinter import ttk
 import customtkinter
 from customtkinter import *
 from PIL import ImageTk, Image
+import Quizclass
 import main
 
 grey_one = '#222222'
@@ -37,13 +38,13 @@ question_label.place(x=100, y=100)
 
 
 questionEntry = customtkinter.CTkEntry(
-    master=root, 
+    master=root,
     placeholder_text="Enter Your Question Here",
     width=400,
     height=50,
     border_width=2,
     corner_radius=10
-    )
+)
 questionEntry.place(x=100, y=150)
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -62,13 +63,13 @@ answer_label.place(x=100, y=250)
 
 
 answerEntry = customtkinter.CTkEntry(
-    master=root, 
+    master=root,
     placeholder_text="Enter Your Answer Here",
     width=400,
     height=50,
     border_width=2,
     corner_radius=10
-    )
+)
 answerEntry.place(x=100, y=300)
 
 
@@ -81,11 +82,10 @@ add_button = customtkinter.CTkButton(
     height=32,
     border_width=0,
     corner_radius=8,
-    text="Add",    
+    text="Add",
     command=main.addButton
 )
 add_button.place(x=100, y=400)
-
 
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
