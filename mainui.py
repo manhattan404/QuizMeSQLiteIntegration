@@ -6,7 +6,7 @@ import customtkinter
 from customtkinter import *
 from PIL import ImageTk, Image
 import Quizclass
-import main
+import mainfile
 
 grey_one = '#222222'
 grey_two = '#333333'
@@ -83,7 +83,7 @@ add_button = customtkinter.CTkButton(
     border_width=0,
     corner_radius=8,
     text="Add",
-    command=main.addButton
+    command=mainfile.addButton
 )
 add_button.place(x=100, y=400)
 

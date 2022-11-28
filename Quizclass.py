@@ -1,5 +1,5 @@
 import sqlite3
-import main
+import mainfile
 import mainui
 
 
