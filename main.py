@@ -3,6 +3,7 @@ import sqlite3
 
 # ----------------------------------------------------------------------------------------
 
+
 def addButton():
     print("Button is pressed")
 
@@ -11,15 +12,17 @@ def addButton():
 
     user_answer = ui.answerEntry.get()
     print(user_answer)
-    
+
 # ----------------------------------------------------------------------------------------
 # Connection to database
 
+
 conn = sqlite3.connect('questions.db')
-    
+
 c = conn.cursor()
 
-c.execute("""INSERT INTO questions (question, answer) VALUES ('is this working?','yes')""")
+c.execute(
+    """INSERT INTO questions (question, answer) VALUES ('another test','its working')""")
 
 conn.commit()
 
