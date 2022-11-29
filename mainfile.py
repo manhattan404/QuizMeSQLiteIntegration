@@ -13,6 +13,7 @@ def addButton():
         ans = mainui.answerEntry.get()
         c.execute(
             "INSERT INTO questions VALUES (:question, :answer)", {'question': quest, 'answer': ans})
+        print(quest + " and " + ans + " has been added to database")
 
 
 def displayTable():
