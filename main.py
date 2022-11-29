@@ -5,8 +5,31 @@ from tkinter import ttk
 import customtkinter
 from customtkinter import *
 from PIL import ImageTk, Image
-import Quizclass
-import mainfile
+import sqlite3
+from Quizclass import *
+
+conn = sqlite3.connect('questions.db')
+
+c = conn.cursor()
+
+
+def addButton():
+    with conn:
+        quest = questionEntry.get()
+        ans = answerEntry.get()
+        c.execute(
+            "INSERT INTO questions VALUES (:question, :answer)", {'question': quest, 'answer': ans})
+        print(quest + " and " + ans + " has been added to database")
+
+
+def displayTable():
+
+    pass
+
+
+
+
+# -------------------------------------------------------------------------------------------------------------------------------------------------
 
 grey_one = '#222222'
 grey_two = '#333333'
@@ -83,7 +106,7 @@ add_button = customtkinter.CTkButton(
     border_width=0,
     corner_radius=8,
     text="Add",
-    command=mainfile.addButton
+    command=addButton
 )
 add_button.place(x=100, y=400)
 

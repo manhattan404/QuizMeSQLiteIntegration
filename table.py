@@ -1,7 +1,4 @@
-import sqlite3
-import customtkinter
 from tkinter import *
-import mainfile
 
 grey_one = '#222222'
 grey_two = '#333333'
