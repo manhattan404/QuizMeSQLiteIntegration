@@ -22,28 +22,55 @@ def addButton():
         print(quest + " and " + ans + " has been added to database")
 
 
-def displayTable():
-
-    pass
-
-
-
-
-# -------------------------------------------------------------------------------------------------------------------------------------------------
+def printData():
+    
+    c.execute("SELECT rowid, * FROM questions")
+    records = c.fetchall()
+    print(records)
 
 grey_one = '#222222'
 grey_two = '#333333'
 light_black = '#111111'
 black = '#000000'
-grey_three = '#bbbbbb'
-
-# -------------------------------------------------------------------------------------------------------------------------------------------------
-# Create a frame that takes in question and answer and populate the SQL database
 
 root = Tk()
 root.title("SQL - Quiz Me")
 root.geometry('1300x750+370+160')
 root.configure(bg=grey_one)
+
+
+# -------------------------------------------------------------------------------------------------------------------------------------------------
+### TREEVIEW ###
+
+
+
+style = ttk.Style() # Add some style
+style.theme_use('default') # Pick a theme
+style.configure("Treeview", background="#D3D3D3", foreground="#black",rowheight=25,fieldbackground="D3D3D3") # Configure Treeview
+style.map('Treeview', background=[('selected', "#347083")]) # change selected color
+# Create a Treeview Frame
+tree_frame = Frame(root)
+tree_frame.pack(pady=100)
+#Create a scroll bar
+tree_scroll = Scrollbar(tree_frame)
+tree_scroll.pack(side=RIGHT, fill=Y)
+# Create the actual treeview
+my_tree = ttk.Treeview(tree_frame, yscrollcommand=tree_scroll.set, selectmode="extended")
+my_tree.pack()
+# Configure the scrollbar 
+tree_scroll.config(command=my_tree.yview)
+# Define Columns
+my_tree['columns'] = ("ID", "Question", "Answer")
+# Formant our columns 
+my_tree.column("#0", width=0, stretch=NO) # this is the hidden column that we want to hide by setting the width to 0
+my_tree.column("ID", anchor=W, width=100)
+my_tree.column("Question", anchor=CENTER, width=140)
+my_tree.column("Answer", anchor=E, width=140)
+# Create headings
+my_tree.heading('#0', text="", anchor=W)
+my_tree.heading('ID', text="ID", anchor=W)
+my_tree.heading('Question', text="Question", anchor=CENTER)
+my_tree.heading('Answer', text="Answer", anchor=E)
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -52,7 +79,7 @@ question_var = tkinter.StringVar(value="Question")
 question_label = customtkinter.CTkLabel(
     master=root,
     textvariable=question_var,
-    width=400,
+    width=200,
     height=50,
     text_color="white",
     corner_radius=8
@@ -63,7 +90,7 @@ question_label.place(x=100, y=100)
 questionEntry = customtkinter.CTkEntry(
     master=root,
     placeholder_text="Enter Your Question Here",
-    width=400,
+    width=200,
     height=50,
     border_width=2,
     corner_radius=10
@@ -77,7 +104,7 @@ answer_var = tkinter.StringVar(value="Answer")
 answer_label = customtkinter.CTkLabel(
     master=root,
     textvariable=answer_var,
-    width=400,
+    width=200,
     height=50,
     text_color="white",
     corner_radius=8
@@ -88,7 +115,7 @@ answer_label.place(x=100, y=250)
 answerEntry = customtkinter.CTkEntry(
     master=root,
     placeholder_text="Enter Your Answer Here",
-    width=400,
+    width=200,
     height=50,
     border_width=2,
     corner_radius=10
