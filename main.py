@@ -7,22 +7,21 @@ from customtkinter import *
 from PIL import ImageTk, Image
 import sqlite3
 
+grey_one = '#222222'
+grey_two = '#333333'
+light_black = '#111111'
+black = '#000000'
+
+root = Tk()
+root.title("SQL - Quiz Me")
+root.geometry('1300x750+370+160')
+root.configure(bg=grey_one)
+
 conn = sqlite3.connect('questions.db')
 
 c = conn.cursor()
 
-def remove_one():
 
-    selected_item = my_tree.focus()
-    my_tree.delete(selected_item)
-
-    conn = sqlite3.connect('questions.db')
-    c = conn.cursor()
-
-    c.execute("DELETE FROM questions WHERE oid=" + selected_item)
-
-    conn.commit()
-    conn.close()
 
 def addButton():
     
@@ -38,12 +37,14 @@ def addButton():
 
         my_tree.delete(*my_tree.get_children())
 
-        
+
+
 def printData():
     
     c.execute("SELECT rowid, * FROM questions")
     records = c.fetchall()
     print(records)
+
 
 def displayonTreeview():
     conn = sqlite3.connect('questions.db')
@@ -65,6 +66,7 @@ def displayonTreeview():
     conn.commit()
     conn.close()
 
+
 def delete_one():
     curItem = my_tree.focus()
     valueList=my_tree.item(curItem, 'values')
@@ -81,16 +83,6 @@ def delete_one():
     conn87.commit()
     conn87.close()
 
-
-grey_one = '#222222'
-grey_two = '#333333'
-light_black = '#111111'
-black = '#000000'
-
-root = Tk()
-root.title("SQL - Quiz Me")
-root.geometry('1300x750+370+160')
-root.configure(bg=grey_one)
 
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -129,14 +121,12 @@ my_tree.heading('Answer', text="Answer", anchor=CENTER)
 # Create striped row tags
 my_tree.tag_configure('oddrow', background="white")
 my_tree.tag_configure('evenrow', background="lightblue")
-# 
-
-
-
-
 
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
+### BUTTONS AND ENTRIES ###
+
+
 
 question_var = tkinter.StringVar(value="Question")
 
@@ -209,6 +199,8 @@ delete_button = customtkinter.CTkButton(
 delete_button.place(x=100, y=500)
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 displayonTreeview()
 
 root.mainloop()
