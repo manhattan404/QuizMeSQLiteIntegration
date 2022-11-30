@@ -28,6 +28,27 @@ def printData():
     records = c.fetchall()
     print(records)
 
+def displayonTreeview():
+    conn = sqlite3.connect('questions.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM questions")
+    records = c.fetchall()
+
+    global count
+    count = 0
+
+    for record in records:
+        if count % 2 == 0:
+            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],record[1]), tags=('evenrow',))
+        else: 
+            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],record[1]), tags=('oddrow',))
+
+        count += 1
+
+    conn.commit()
+    conn.close()
+
+
 grey_one = '#222222'
 grey_two = '#333333'
 light_black = '#111111'
@@ -71,6 +92,16 @@ my_tree.heading('#0', text="", anchor=W)
 my_tree.heading('ID', text="ID", anchor=W)
 my_tree.heading('Question', text="Question", anchor=CENTER)
 my_tree.heading('Answer', text="Answer", anchor=E)
+# Create fake data
+# Create striped row tags
+my_tree.tag_configure('oddrow', background="white")
+my_tree.tag_configure('evenrow', background="lightblue")
+# 
+
+
+
+
+
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -140,4 +171,5 @@ add_button.place(x=100, y=400)
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
+displayonTreeview()
 root.mainloop()
