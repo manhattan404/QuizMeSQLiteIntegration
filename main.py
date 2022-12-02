@@ -7,6 +7,7 @@ from customtkinter import *
 from PIL import ImageTk, Image
 import sqlite3
 
+
 grey_one = '#222222'
 grey_two = '#333333'
 light_black = '#111111'
@@ -20,6 +21,11 @@ root.configure(bg=grey_one)
 conn = sqlite3.connect('questions.db')
 
 c = conn.cursor()
+
+
+def newTopic():
+    # this will create a new folder for new topics and also create a database file based on topic's name.
+    pass
 
 
 def addButton():
