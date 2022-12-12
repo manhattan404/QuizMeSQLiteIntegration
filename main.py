@@ -7,6 +7,7 @@ from customtkinter import *
 from PIL import ImageTk, Image
 import sqlite3
 
+
 grey_one = '#222222'
 grey_two = '#333333'
 light_black = '#111111'
@@ -22,10 +23,13 @@ conn = sqlite3.connect('questions.db')
 c = conn.cursor()
 
 
+def newTopic():
+    # this will create a new folder for new topics and also create a database file based on topic's name.
+    pass
+
 
 def addButton():
-    
-    
+
     with conn:
         quest = questionEntry.get()
         ans = answerEntry.get()
@@ -37,10 +41,11 @@ def addButton():
 
         my_tree.delete(*my_tree.get_children())
 
+        displayonTreeview()
 
 
 def printData():
-    
+
     c.execute("SELECT rowid, * FROM questions")
     records = c.fetchall()
     print(records)
@@ -57,9 +62,11 @@ def displayonTreeview():
 
     for record in records:
         if count % 2 == 0:
-            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],record[1], record[2]), tags=('evenrow',))
-        else: 
-            my_tree.insert(parent='', index='end', iid=count, text='', values=(record[0],record[1], record[2]), tags=('oddrow',))
+            my_tree.insert(parent='', index='end', iid=count, text='', values=(
+                record[0], record[1], record[2]), tags=('evenrow',))
+        else:
+            my_tree.insert(parent='', index='end', iid=count, text='', values=(
+                record[0], record[1], record[2]), tags=('oddrow',))
 
         count += 1
 
@@ -69,9 +76,9 @@ def displayonTreeview():
 
 def delete_one():
     curItem = my_tree.focus()
-    valueList=my_tree.item(curItem, 'values')
+    valueList = my_tree.item(curItem, 'values')
     global selectedItem2
-    selectedItem2=valueList[0]
+    selectedItem2 = valueList[0]
     questID = my_tree.selection()[0]
     my_tree.delete(questID)
     conn87 = sqlite3.connect('questions.db')
@@ -84,31 +91,33 @@ def delete_one():
     conn87.close()
 
 
-
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 ### TREEVIEW ###
 
 
-
-style = ttk.Style() # Add some style
-style.theme_use('default') # Pick a theme
-style.configure("Treeview", background="#D3D3D3", foreground="#black",rowheight=25,fieldbackground="D3D3D3") # Configure Treeview
-style.map('Treeview', background=[('selected', "#347083")]) # change selected color
+style = ttk.Style()  # Add some style
+style.theme_use('default')  # Pick a theme
+style.configure("Treeview", background="#D3D3D3", foreground="#black",
+                rowheight=25, fieldbackground="D3D3D3")  # Configure Treeview
+# change selected color
+style.map('Treeview', background=[('selected', "#347083")])
 # Create a Treeview Frame
 tree_frame = Frame(root)
 tree_frame.pack(pady=100)
-#Create a scroll bar
+# Create a scroll bar
 tree_scroll = Scrollbar(tree_frame)
 tree_scroll.pack(side=RIGHT, fill=Y)
 # Create the actual treeview
-my_tree = ttk.Treeview(tree_frame, yscrollcommand=tree_scroll.set, selectmode="extended")
+my_tree = ttk.Treeview(
+    tree_frame, yscrollcommand=tree_scroll.set, selectmode="extended")
 my_tree.pack()
-# Configure the scrollbar 
+# Configure the scrollbar
 tree_scroll.config(command=my_tree.yview)
 # Define Columns
 my_tree['columns'] = ("ID", "Question", "Answer")
-# Formant our columns 
-my_tree.column("#0", width=0, stretch=NO) # this is the hidden column that we want to hide by setting the width to 0
+# Formant our columns
+# this is the hidden column that we want to hide by setting the width to 0
+my_tree.column("#0", width=0, stretch=NO)
 my_tree.column("ID", anchor=CENTER, width=70)
 my_tree.column("Question", anchor=W, width=400)
 my_tree.column("Answer", anchor=CENTER, width=180)
@@ -125,7 +134,6 @@ my_tree.tag_configure('evenrow', background="lightblue")
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 ### BUTTONS AND ENTRIES ###
-
 
 
 question_var = tkinter.StringVar(value="Question")
@@ -198,9 +206,18 @@ delete_button = customtkinter.CTkButton(
 )
 delete_button.place(x=100, y=500)
 
+display_treeview_button = customtkinter.CTkButton(
+    master=root,
+    width=120,
+    height=32,
+    border_width=0,
+    corner_radius=8,
+    text="Display Data",
+    command=displayonTreeview
+)
+display_treeview_button.place(x=100, y=600)
+
 # -------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-displayonTreeview()
 
 root.mainloop()
