@@ -2,17 +2,26 @@ import tkinter as tk
 import sqlite3
 from tkinter import messagebox
 
-# create the main window
+grey_one = '#222222'
+grey_two = '#333333'
+light_black = '#111111'
+black = '#000000'
+
+
 window = tk.Tk()
 window.title("Sign Up")
+window.geometry('350x600+370+160')
+window.configure(bg=grey_one)
+window.resizable(width=False, height=False)
 
-# create the input fields for username, password, and confirm password
+
 username_label = tk.Label(text="Username:")
 username_entry = tk.Entry()
 password_label = tk.Label(text="Password:")
 password_entry = tk.Entry(show="*")
 confirm_password_label = tk.Label(text="Confirm Password:")
 confirm_password_entry = tk.Entry(show="*")
+
 
 # create the sign up button
 def sign_up():
@@ -25,33 +34,29 @@ def sign_up():
         tk.messagebox.showerror("Error", "Passwords do not match")
         return
 
-    # connect to the database
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
 
-    # insert the new user into the database
-    c.execute("INSERT INTO users VALUES (:username, :password)", {'username': usernameVar, 'password': passwordVar})
-              
+    c.execute("INSERT INTO users VALUES (:username, :password)",
+              {'username': usernameVar, 'password': passwordVar})
 
-              # "INSERT INTO questions VALUES (:question, :answer)", {'question': quest, 'answer': ans}
-
-    # commit the changes and close the connection
     conn.commit()
     conn.close()
 
-    # show a success message
     tk.messagebox.showinfo("Success", "Sign up successful")
 
+
 sign_up_button = tk.Button(text="Sign Up", command=sign_up)
+sign_up_button.place(x=175, y=300, anchor='center')
 
-# use grid layout to place the input fields and button
-username_label.grid(row=0, column=0, sticky="E")
-username_entry.grid(row=0, column=1)
-password_label.grid(row=1, column=0, sticky="E")
-password_entry.grid(row=1, column=1)
-confirm_password_label.grid(row=2, column=0, sticky="E")
-confirm_password_entry.grid(row=2, column=1)
-sign_up_button.grid(row=3, column=1, sticky="E")
 
-# run the main event loop
+# username_label.grid(row=0, column=0, sticky="E")
+# username_entry.grid(row=0, column=1)
+# password_label.grid(row=1, column=0, sticky="E")
+# password_entry.grid(row=1, column=1)
+# confirm_password_label.grid(row=2, column=0, sticky="E")
+# confirm_password_entry.grid(row=2, column=1)
+# sign_up_button.grid(row=3, column=1, sticky="E")
+
+
 window.mainloop()
