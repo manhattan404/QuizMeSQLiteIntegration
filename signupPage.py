@@ -1,4 +1,6 @@
 import tkinter as tk
+import sqlite3
+from tkinter import messagebox
 
 # create the main window
 window = tk.Tk()
@@ -14,25 +16,31 @@ confirm_password_entry = tk.Entry(show="*")
 
 # create the sign up button
 def sign_up():
-    username = username_entry.get()
-    password = password_entry.get()
+    usernameVar = username_entry.get()
+    passwordVar = password_entry.get()
     confirm_password = confirm_password_entry.get()
 
     # make sure the passwords match
-    if password != confirm_password:
+    if passwordVar != confirm_password:
         tk.messagebox.showerror("Error", "Passwords do not match")
         return
 
-    # create the next frame
-    next_frame = tk.Toplevel(window)
-    next_frame.title("Next Frame")
+    # connect to the database
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
 
-    # add a label to the next frame
-    next_frame_label = tk.Label(next_frame, text="This is the next frame")
-    next_frame_label.pack()
+    # insert the new user into the database
+    c.execute("INSERT INTO users VALUES (:username, :password)", {'username': usernameVar, 'password': passwordVar})
+              
 
-    # close the previous frame
-    window.destroy()
+              # "INSERT INTO questions VALUES (:question, :answer)", {'question': quest, 'answer': ans}
+
+    # commit the changes and close the connection
+    conn.commit()
+    conn.close()
+
+    # show a success message
+    tk.messagebox.showinfo("Success", "Sign up successful")
 
 sign_up_button = tk.Button(text="Sign Up", command=sign_up)
 
