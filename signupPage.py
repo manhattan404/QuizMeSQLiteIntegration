@@ -1,11 +1,19 @@
 import tkinter as tk
 import sqlite3
 from tkinter import messagebox
+from PIL import Image, ImageTk
+import os
 
 grey_one = '#222222'
 grey_two = '#333333'
 light_black = '#111111'
 black = '#000000'
+
+image_path = os.path.join(
+    "C:/Users/Gaming/Documents/AAA CODE FILES/QuizMeSQLiteIntegration/assets/loginbg.png")
+signup_bg = Image.open(image_path)
+
+bg_image = ImageTk.PhotoImage(signup_bg)
 
 
 window = tk.Tk()
@@ -13,6 +21,7 @@ window.title("Sign Up")
 window.geometry('350x600+370+160')
 window.configure(bg=grey_one)
 window.resizable(width=False, height=False)
+window.bgpic(bg_image)
 
 
 username_label = tk.Label(text="Username:")
@@ -47,16 +56,16 @@ def sign_up():
 
 
 sign_up_button = tk.Button(text="Sign Up", command=sign_up)
-sign_up_button.place(x=175, y=300, anchor='center')
+#sign_up_button.place(x=175, y=300, anchor='center')
 
 
-# username_label.grid(row=0, column=0, sticky="E")
-# username_entry.grid(row=0, column=1)
-# password_label.grid(row=1, column=0, sticky="E")
-# password_entry.grid(row=1, column=1)
-# confirm_password_label.grid(row=2, column=0, sticky="E")
-# confirm_password_entry.grid(row=2, column=1)
-# sign_up_button.grid(row=3, column=1, sticky="E")
+username_label.grid(row=0, column=0, sticky="E")
+username_entry.grid(row=0, column=1)
+password_label.grid(row=1, column=0, sticky="E")
+password_entry.grid(row=1, column=1)
+confirm_password_label.grid(row=2, column=0, sticky="E")
+confirm_password_entry.grid(row=2, column=1)
+sign_up_button.grid(row=3, column=1, sticky="E")
 
 
 window.mainloop()

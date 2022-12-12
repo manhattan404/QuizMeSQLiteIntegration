@@ -9,8 +9,7 @@ cursor = conn.cursor()
 # Define the SQL query
 query = """
     CREATE TABLE users (
-        id INTEGER PRIMARY KEY,
-        username TEXT NOT NULL,
+        username TEXT PRIMARY KEY,
         password TEXT NOT NULL
     );
 """
