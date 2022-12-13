@@ -9,19 +9,12 @@ grey_two = '#333333'
 light_black = '#111111'
 black = '#000000'
 
-image_path = os.path.join(
-    "C:/Users/Gaming/Documents/AAA CODE FILES/QuizMeSQLiteIntegration/assets/loginbg.png")
-signup_bg = Image.open(image_path)
-
-bg_image = ImageTk.PhotoImage(signup_bg)
-
 
 window = tk.Tk()
 window.title("Sign Up")
 window.geometry('350x600+370+160')
 window.configure(bg=grey_one)
 window.resizable(width=False, height=False)
-window.bgpic(bg_image)
 
 
 username_label = tk.Label(text="Username:")
