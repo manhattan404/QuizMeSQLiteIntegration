@@ -16,15 +16,63 @@ root.geometry('350x600+370+160')
 root.configure(bg=grey_one)
 root.resizable(False, False)
 
+
 canvas = Canvas(root, bg="black", width=350, height=600)
 bg = PhotoImage(file="assets/loginbg.png")
 canvas.create_image(175, 300, image=bg)
 canvas.place(x=0, y=0)
 
-button_bg = PhotoImage(file="assets/button.png")
-
-
 conn = sqlite3
+
+
+def account_signup():
+
+    global signup_bg
+    root.withdraw()
+
+    top_signup = Toplevel()
+    top_signup.geometry("350x600+370+160")
+    top_signup.title("Sign Up")
+    top_signup.resizable(False, False)
+    signup_bg = ImageTk.PhotoImage(Image.open("assets/signup.png"))
+    signup_bg_label = Label(top_signup, image=signup_bg)
+    signup_bg_label.place(x=0, y=0)
+
+    def on_enter(e):
+        user_entry.delete(0, 'end')
+
+    def on_leave(e):
+        if user_entry.get() == '':
+            user_entry.insert(0, 'Username')
+
+    user_entry = Entry(top_signup, width=25, fg='black', border=0,
+                       bg='white', font=('Microsoft Yahei UI Light', 11))
+    user_entry.place(x=70, y=365)
+    user_entry.insert(0, 'Username')
+    user_entry.bind("<FocusIn>", on_enter)
+    user_entry.bind("<FocusOut>", on_leave)
+
+    def on_enter(e):
+        password_entry.delete(0, 'end')
+
+    def on_leave(e):
+        if password_entry.get() == '':
+            password_entry.insert(0, 'Password')
+
+    password_entry = Entry(top_signup, width=25, fg='black', border=0,
+                           bg='white', font=('Microsoft Yahei UI Light', 11))
+    password_entry.place(x=70, y=425)
+    password_entry.insert(0, 'Password')
+    password_entry.bind("<FocusIn>", on_enter)
+    password_entry.bind("<FocusOut>", on_leave)
+
+    Frame(top_signup, width=207, height=1, bg='black').place(x=70, y=450)
+
+    Frame(top_signup, width=207, height=1, bg=light_black).place(x=70, y=390)
+
+    signup_bttn = customtkinter.CTkButton(
+        master=top_signup, width=120, height=32, text="Sign Up", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="black", bg_color="white", font=("Ebrima", 15))
+    signup_bttn.place(x=107, y=480)
 
 
 def authenticate_user():
@@ -41,11 +89,6 @@ def authenticate_user():
 
     if result:
         print("User authenticated!")
-
-        root.destroy()
-
-        mainwindow = tk.Tk()
-        mainwindow.geometry('100x100+300+300')
 
     else:
         print("Username or password is incorrect")
@@ -99,16 +142,16 @@ Frame(root, width=207, height=1, bg='black').place(x=70, y=450)
 ### ---------------------------------------------------------------------------------------------------------------- ###
 
 login_button = customtkinter.CTkButton(
-    master=root, width=120, height=32, text="Login" ,border_width=0, corner_radius=15, command=authenticate_user, fg_color="#5F9DF7", border_color="white", text_color="black", bg_color="white", font=("Ebrima", 15))
+    master=root, width=120, height=32, text="Login", border_width=0, corner_radius=15, command=authenticate_user, fg_color="#5F9DF7", border_color="white", text_color="black", bg_color="white", font=("Ebrima", 15))
 login_button.place(x=107, y=480)
 
 
 signup = Label(root, text="Don't have an account?", fg='black',
-              bg='white', font=('Microsoft YaHei UI Light', 9))
+               bg='white', font=('Microsoft YaHei UI Light', 9))
 signup.place(x=65, y=530)
 
 sign_up = Button(root, width=6, text='Sign up', border=0,
-                 bg='white', cursor='hand2', fg='#57a1f8')
+                 bg='white', cursor='hand2', fg='#57a1f8', command=account_signup)
 sign_up.place(x=200, y=530)
 
 
