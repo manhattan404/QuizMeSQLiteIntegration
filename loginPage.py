@@ -13,7 +13,13 @@ black = '#000000'
 
 root = tk.Tk()
 root.title("Quiz Me by Szhes")
-root.geometry('350x600+370+160')
+# root.geometry('350x600+370+160')
+
+x = int(root.winfo_screenwidth() // 2.5)
+y = int(root.winfo_screenheight() * 0.15)
+root.geometry('350x600' + '+' + str(x) + '+' + str(y))
+
+
 root.configure(bg=grey_one)
 root.resizable(False, False)
 
@@ -31,8 +37,12 @@ def account_signup():
     global signup_bg
     root.withdraw()
 
+    x = int(root.winfo_screenwidth() // 2.5)
+    y = int(root.winfo_screenheight() * 0.15)
+    # root.geometry('350x600' + '+' + str(x) + '+' + str(y))
+
     top_signup = Toplevel()
-    top_signup.geometry("350x600+370+160")
+    top_signup.geometry('350x600' + '+' + str(x) + '+' + str(y))
     top_signup.title("Sign Up")
     top_signup.resizable(False, False)
     signup_bg = ImageTk.PhotoImage(Image.open("assets/signup.png"))
@@ -109,15 +119,39 @@ def account_signup():
     Frame(top_signup, width=207, height=1, bg='black').place(x=70, y=465)
 
     signup_bttn = customtkinter.CTkButton(
-        master=top_signup, width=120, height=32, text="Sign Up", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="black", bg_color="white", font=("Ebrima", 15), command=sign_up)
+        master=top_signup, width=120, height=32, text="Sign Up", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="white", bg_color="white", font=("Ebrima", 15), command=sign_up)
     signup_bttn.place(x=107, y=510)
 
 
-def authenticate_user():
+def welcomeScreen():
+    global welcome_bg
+    root.withdraw()
 
+    x = int(root.winfo_screenwidth() // 2.5)
+    y = int(root.winfo_screenheight() * 0.15)
+
+    top_welcome = Toplevel()
+    top_welcome.geometry('350x600' + '+' + str(x) + '+' + str(y))
+    top_welcome.title("Main Menu")
+    top_welcome.resizable(False, False)
+    top_welcome.configure(bg='black')
+
+    welcome_bg = PhotoImage(file="assets/welcome.png")
+    welcomebg_label = Label(top_welcome, image=welcome_bg)
+    welcomebg_label.place(x=0, y=0)
+
+    welcome_text = Label(top_welcome, text="Welcome ",
+                         bg="white", font=("Verdana", 35))
+    welcome_text.place(x=55, y=270)
+    username_text = Label(top_welcome, text=username + "!",
+                          bg="white", font=("Verdana", 45))
+    username_text.place(x=55, y=330)
+
+
+def authenticate_user():
+    global username
     username = user_entry.get()
     password = password_entry.get()
-
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
 
@@ -127,11 +161,11 @@ def authenticate_user():
 
     if result:
         print("User authenticated!")
-
     else:
         print("Username or password is incorrect")
 
     conn.close()
+    welcomeScreen()
 
 ### ---------------------------------------------------------------------------------------------------------------- ###
 
@@ -180,14 +214,13 @@ Frame(root, width=207, height=1, bg='black').place(x=70, y=450)
 ### ---------------------------------------------------------------------------------------------------------------- ###
 
 login_button = customtkinter.CTkButton(
-    master=root, width=120, height=32, text="Login", border_width=0, corner_radius=15, command=authenticate_user, fg_color="#5F9DF7", border_color="white", text_color="black", bg_color="white", font=("Ebrima", 15))
+    master=root, width=120, height=32, text="Login", border_width=0, corner_radius=15, command=authenticate_user, fg_color="#5F9DF7", border_color="white", text_color="white", bg_color="white", font=("Ebrima", 15))
 login_button.place(x=107, y=480)
 
 
 signup = Label(root, text="Don't have an account?", fg='black',
                bg='white', font=('Microsoft YaHei UI Light', 9))
 signup.place(x=65, y=530)
-
 sign_up = Button(root, width=6, text='Sign up', border=0,
                  bg='white', cursor='hand2', fg='#57a1f8', command=account_signup)
 sign_up.place(x=200, y=530)
