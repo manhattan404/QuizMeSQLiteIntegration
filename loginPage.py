@@ -5,7 +5,6 @@ import customtkinter
 from customtkinter import *
 from PIL import ImageTk, Image
 
-
 grey_one = '#222222'
 grey_two = '#333333'
 light_black = '#111111'
@@ -101,8 +100,17 @@ login_button = customtkinter.CTkButton(
     master=root, text="Login", width=120, height=32, border_width=0, corner_radius=8, command=authenticate_user, fg_color="#5F9DF7", border_color="white", text_color="black", bg_color="white", font=("Microsoft Yahei UI Light", 15))
 login_button.place(x=107, y=480)
 
-signup_button = customtkinter.CTkButton(
-    master=root, text="Create an account", width=120, height=15, fg_color="transparent", border_color="white", text_color="black", bg_color="white", font=("Microsoft Yahei UI Light", 13), hover=True, text_color_disabled="blue", hover_color="grey")
-signup_button.place(x=104, y=530)
+# signup_button = customtkinter.CTkButton(
+#     master=root, text="Create an account", width=120, height=15, fg_color="transparent", border_color="white", text_color="black", bg_color="white", font=("Microsoft Yahei UI Light", 13), hover=True, text_color_disabled="blue", hover_color="grey")
+# signup_button.place(x=104, y=530)
+
+
+signup = Label(root, text="Don't have an account?", fg='black',
+              bg='white', font=('Microsoft YaHei UI Light', 9))
+signup.place(x=65, y=530)
+
+sign_up = Button(root, width=6, text='Sign up', border=0,
+                 bg='white', cursor='hand2', fg='#57a1f8')
+sign_up.place(x=200, y=530)
 
 root.mainloop()

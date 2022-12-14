@@ -7,7 +7,6 @@ from customtkinter import *
 from PIL import ImageTk, Image
 import sqlite3
 
-
 grey_one = '#222222'
 grey_two = '#333333'
 light_black = '#111111'
@@ -218,6 +217,5 @@ display_treeview_button = customtkinter.CTkButton(
 display_treeview_button.place(x=100, y=600)
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 root.mainloop()
