@@ -4,6 +4,7 @@ import sqlite3
 import customtkinter
 from customtkinter import *
 from PIL import ImageTk, Image
+from tkinter import messagebox
 
 grey_one = '#222222'
 grey_two = '#333333'
@@ -38,6 +39,30 @@ def account_signup():
     signup_bg_label = Label(top_signup, image=signup_bg)
     signup_bg_label.place(x=0, y=0)
 
+    def sign_up():
+        usernameVar = user_entry.get()
+        passwordVar = password_entry.get()
+        confirm_password = confirm_entry.get()
+
+        # make sure the passwords match
+        if passwordVar != confirm_password:
+            tk.messagebox.showerror("Error", "Passwords do not match")
+            return
+
+        conn = sqlite3.connect("users.db")
+        c = conn.cursor()
+
+        c.execute("INSERT INTO users VALUES (:username, :password)",
+                  {'username': usernameVar, 'password': passwordVar})
+
+        conn.commit()
+        conn.close()
+
+        tk.messagebox.showinfo("Success", "Sign up successful")
+
+        top_signup.destroy()
+        root.deiconify()
+
     def on_enter(e):
         user_entry.delete(0, 'end')
 
@@ -47,10 +72,11 @@ def account_signup():
 
     user_entry = Entry(top_signup, width=25, fg='black', border=0,
                        bg='white', font=('Microsoft Yahei UI Light', 11))
-    user_entry.place(x=70, y=365)
+    user_entry.place(x=70, y=320)
     user_entry.insert(0, 'Username')
     user_entry.bind("<FocusIn>", on_enter)
     user_entry.bind("<FocusOut>", on_leave)
+    Frame(top_signup, width=207, height=1, bg=light_black).place(x=70, y=345)
 
     def on_enter(e):
         password_entry.delete(0, 'end')
@@ -61,18 +87,30 @@ def account_signup():
 
     password_entry = Entry(top_signup, width=25, fg='black', border=0,
                            bg='white', font=('Microsoft Yahei UI Light', 11))
-    password_entry.place(x=70, y=425)
+    password_entry.place(x=70, y=380)
     password_entry.insert(0, 'Password')
     password_entry.bind("<FocusIn>", on_enter)
     password_entry.bind("<FocusOut>", on_leave)
+    Frame(top_signup, width=207, height=1, bg='black').place(x=70, y=405)
 
-    Frame(top_signup, width=207, height=1, bg='black').place(x=70, y=450)
+    def on_enter(e):
+        confirm_entry.delete(0, 'end')
 
-    Frame(top_signup, width=207, height=1, bg=light_black).place(x=70, y=390)
+    def on_leave(e):
+        if confirm_entry.get() == '':
+            confirm_entry.insert(0, 'Password')
+
+    confirm_entry = Entry(top_signup, width=25, fg='black', border=0,
+                          bg='white', font=('Microsoft Yahei UI Light', 11))
+    confirm_entry.place(x=70, y=440)
+    confirm_entry.insert(0, 'Confirm Password')
+    confirm_entry.bind("<FocusIn>", on_enter)
+    confirm_entry.bind("<FocusOut>", on_leave)
+    Frame(top_signup, width=207, height=1, bg='black').place(x=70, y=465)
 
     signup_bttn = customtkinter.CTkButton(
-        master=top_signup, width=120, height=32, text="Sign Up", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="black", bg_color="white", font=("Ebrima", 15))
-    signup_bttn.place(x=107, y=480)
+        master=top_signup, width=120, height=32, text="Sign Up", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="black", bg_color="white", font=("Ebrima", 15), command=sign_up)
+    signup_bttn.place(x=107, y=510)
 
 
 def authenticate_user():
