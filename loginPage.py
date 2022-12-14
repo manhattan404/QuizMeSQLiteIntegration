@@ -40,7 +40,12 @@ def authenticate_user():
 
     if result:
         print("User authenticated!")
+
         root.destroy()
+
+        mainwindow = tk.Tk()
+        mainwindow.geometry('100x100+300+300')
+
     else:
         print("Username or password is incorrect")
 
