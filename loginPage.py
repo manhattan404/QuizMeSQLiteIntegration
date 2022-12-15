@@ -34,12 +34,16 @@ conn = sqlite3
 
 def account_signup():
 
+    def backButton():
+        top_signup.destroy()
+        root.deiconify()
+
     global signup_bg
     root.withdraw()
 
     x = int(root.winfo_screenwidth() // 2.5)
     y = int(root.winfo_screenheight() * 0.15)
-    # root.geometry('350x600' + '+' + str(x) + '+' + str(y))
+    
 
     top_signup = Toplevel()
     top_signup.geometry('350x600' + '+' + str(x) + '+' + str(y))
@@ -48,6 +52,9 @@ def account_signup():
     signup_bg = ImageTk.PhotoImage(Image.open("assets/signup.png"))
     signup_bg_label = Label(top_signup, image=signup_bg)
     signup_bg_label.place(x=0, y=0)
+
+    back_button = CTkButton(master=top_signup, width=80, height=25, text="Back", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="white", bg_color="white", font=("Ebrima", 15), command=backButton)
+    back_button.place(x=40, y=170)
 
     def sign_up():
         usernameVar = user_entry.get()
@@ -149,6 +156,7 @@ def welcomeScreen():
 
 
 def authenticate_user():
+    
     global username
     username = user_entry.get()
     password = password_entry.get()
@@ -161,11 +169,13 @@ def authenticate_user():
 
     if result:
         print("User authenticated!")
+        welcomeScreen()
     else:
         print("Username or password is incorrect")
 
+    conn.commit()
     conn.close()
-    welcomeScreen()
+
 
 ### ---------------------------------------------------------------------------------------------------------------- ###
 
