@@ -1,0 +1,24 @@
+import os
+from tkinter import *
+
+def show_directories(directory):
+    # Clear the listbox
+    listbox.delete(0, END)
+
+    # Get a list of the directories in the specified directory
+    directories = [d for d in os.listdir(directory) if os.path.isdir(os.path.join(directory, d))]
+
+    # Add the directories to the listbox
+    for directory in directories:
+        listbox.insert(END, directory)
+
+# Create the Tkinter window and widgets
+root = Tk()
+
+listbox = Listbox(root)
+listbox.pack()
+
+# Call the show_directories function when the window is loaded
+show_directories("/path/to/directory")
+
+root.mainloop()

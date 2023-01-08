@@ -1,0 +1,6 @@
+- Make a function that displays folders of topics on 'Topic'
+- Button to show results/progress (What library to use? Panda or Matplotlib?)
+- Make a welcome page showing username
+- Make a white theme similat to log in page.
+- How to make a round button with gradient effect? Use Figma
+

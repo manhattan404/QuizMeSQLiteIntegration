@@ -43,13 +43,6 @@ def addButton():
         displayonTreeview()
 
 
-def printData():
-
-    c.execute("SELECT rowid, * FROM questions")
-    records = c.fetchall()
-    print(records)
-
-
 def displayonTreeview():
     conn = sqlite3.connect('questions.db')
     c = conn.cursor()
