@@ -1,45 +1,51 @@
 from tkinter import *
-from tkinter import messagebox
-import tkinter as tk
-from tkinter import ttk
-import customtkinter
-from customtkinter import *
 from PIL import ImageTk, Image
-import sqlite3
 
-background = 'white'
-box_color = '#F0EBE3'
-grey_one = '#222222'
-grey_two = '#333333'
-light_black = '#111111'
-black = '#000000'
-
-mainwindow = Tk()
-mainwindow.title("SQL - Quiz Me")
-mainwindow.geometry('1300x750+370+160')
-mainwindow.configure(bg=grey_two)
-mainwindow.resizable(False, False)
+dashboard = Tk()
+dashboard.geometry('900x500')
+dashboard.configure(bg='#262626')
+dashboard.resizable(0, 0)
+dashboard.title('Quiz Me')
 
 
-sideframe = tk.Frame(mainwindow, bg=grey_one)
-sideframe.pack(side=tk.LEFT)
-sideframe.pack_propagate(False)
-sideframe.configure(width=300, height=750)
+def toggle_win():
+    f1 = Frame(dashboard, width=300, height=500, bg='#12c4c0')
+    f1.place(x=0, y=0)
+
+    def bttn(x, y, text, bcolor, fcolor, cmd):
+
+        def on_entera(e):
+            myButton1['background'] = bcolor  # ffcc66
+            myButton1['foreground'] = '#262626'
+
+        def on_leave(e):
+            myButton1['background'] = fcolor
+            myButton1['foreground'] = '#262626'
+
+        myButton1 = Button(f1, text=text, width=42, height=2, fg='#262626', border=0,
+                           bg=fcolor, activeforeground='#262626', activebackground=bcolor, command=cmd)
+
+        myButton1.bind("<Enter>", on_entera)
+        myButton1.bind("<Leave>", on_leave)
+
+        myButton1.place(x=x, y=y)
+
+    bttn(0, 80, 'A C E R', '#0f9d9a', '#12c4c0', None)
+    bttn(0, 117, 'D E L L', '#0f9d9a', '#12c4c0', None)
+    bttn(0, 154, 'A P P L E', '#0f9d9a', '#12c4c0', None)
+
+    def dele():
+        f1.destroy()
+
+    global img2
+    img2 = ImageTk.PhotoImage(Image.open('assets/close.png'))
+
+    Button(f1, image=img2, command=dele, border=0,
+           activebackground='#12c4c0', bg='#12c4c0').place(x=5, y=10)
 
 
-main_frame = tk.Frame(
-    mainwindow, bg=background)
-main_frame.pack(side=tk.LEFT)
-main_frame.pack_propagate(False)
-main_frame.configure(width=1000, height=750)
+img1 = ImageTk.PhotoImage(Image.open('assets/open.png'))
+Button(dashboard, command=toggle_win, image=img1, border=0,
+       bg='#262626', activebackground='#262626').place(x=5, y=10)
 
-# topframe = customtkinter.CTkFrame(
-#     master=mainwindow, width=1068, height=250, corner_radius=30, fg_color=box_color)
-# topframe.place(x=400, y=20)
-
-# midframe = customtkinter.CTkFrame(
-#     master=mainwindow, width=1068, height=517, corner_radius=30, fg_color=box_color)
-# midframe.place(x=400, y=305)
-
-
-mainwindow.mainloop()
+dashboard.mainloop()
