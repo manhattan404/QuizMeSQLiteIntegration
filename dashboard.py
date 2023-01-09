@@ -3,15 +3,19 @@ from PIL import ImageTk, Image
 from tkinter import ttk
 import sqlite3
 
+whitebg = '#F9F9F9'
+bluebg = '#39B5E0'
+greybg = '#222222'
+
 dashboard = Tk()
 dashboard.geometry('1300x750+370+160')
-dashboard.configure(bg='#262626')
+dashboard.configure(bg=whitebg)
 dashboard.resizable(0, 0)
 dashboard.title('Quiz Me')
 
 
 def toggle_win():
-    f1 = Frame(dashboard, width=300, height=750, bg='#12c4c0')
+    f1 = Frame(dashboard, width=300, height=750, bg='#262626')
     f1.place(x=0, y=0)
 
     def bttn(x, y, text, bcolor, fcolor, cmd):
@@ -33,7 +37,7 @@ def toggle_win():
         myButton1.place(x=x, y=y)
 
     bttn(0, 80, 'T A K E Q U I Z', '#0f9d9a', '#12c4c0', None)
-    bttn(0, 117, 'S H O W Q U I Z', '#0f9d9a', '#12c4c0', displayonTreeview)
+    bttn(0, 117, 'S H O W Q U I Z', '#0f9d9a', '#12c4c0', None)
     bttn(0, 154, 'S C O R E S', '#0f9d9a', '#12c4c0', None)
 
     def dele():
@@ -68,30 +72,24 @@ def displayonTreeview():
     tree_scroll = Scrollbar(tree_frame)
     tree_scroll.pack(side=RIGHT, fill=Y)
 
-    # Create the actual treeview
     my_tree = ttk.Treeview(
         tree_frame, yscrollcommand=tree_scroll.set, selectmode="extended")
     my_tree.pack()
-    # Configure the scrollbar
+
     tree_scroll.config(command=my_tree.yview)
 
-    # Define Columns
     my_tree['columns'] = ("ID", "Question", "Answer")
-    # Formant our columns
-    # this is the hidden column that we want to hide by setting the width to 0
+
     my_tree.column("#0", width=0, stretch=NO)
     my_tree.column("ID", anchor=CENTER, width=70)
     my_tree.column("Question", anchor=W, width=400)
     my_tree.column("Answer", anchor=CENTER, width=180)
 
-    # Create headings
     my_tree.heading('#0', text="", anchor=W)
     my_tree.heading('ID', text="Question ID ", anchor=CENTER)
     my_tree.heading('Question', text="Question", anchor=CENTER)
     my_tree.heading('Answer', text="Answer", anchor=CENTER)
 
-    # Create fake data
-    # Create striped row tags
     my_tree.tag_configure('oddrow', background="white")
     my_tree.tag_configure('evenrow', background="lightblue")
 
@@ -116,8 +114,26 @@ def displayonTreeview():
     conn.commit()
     conn.close()
 
-
 # -------------------------------------------------------------------------------------------------------------------------------------------------
+### TOPICS FRAME ###
 
 
+topics_frame = Frame(dashboard, width=955, height=700, bg=whitebg)
+topics_frame.place(x=325, y=25)
+folders_frame = Frame(topics_frame, width=955, height=550, bg=greybg)
+folders_frame.place(x=0, y=150)
+topics_label = Label(topics_frame, text='TOPICS',
+                     font=('Expo M', 80), fg=greybg)
+topics_label.place(x=20, y=20)
+
+# topicsFrame = customtkinter.CTkFrame(
+#     master=dashboard, width=955, height=700, corner_radius=15, bg_color=whitebg)
+# topicsFrame.place(x=325, y=25)
+# foldersFrame = customtkinter.CTkFrame(
+#     master=topicsFrame, width=955, height=550, corner_radius=15, bg_color='#222222')
+# foldersFrame.place(x=0, y=150)
+# topics_label = customtkinter.CTkLabel(
+#     master=topicsFrame, text='TOPICS', width=120, height=120, font=('Expo M', 100))
+# topics_label.place(x=25, y=20)
+# -------------------------------------------------------------------------------------------------------------------------------------------------
 dashboard.mainloop()
