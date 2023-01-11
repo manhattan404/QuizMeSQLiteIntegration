@@ -136,4 +136,6 @@ topics_label.place(x=20, y=20)
 #     master=topicsFrame, text='TOPICS', width=120, height=120, font=('Expo M', 100))
 # topics_label.place(x=25, y=20)
 # -------------------------------------------------------------------------------------------------------------------------------------------------
+
+toggle_win()
 dashboard.mainloop()
