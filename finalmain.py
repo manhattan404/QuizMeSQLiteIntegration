@@ -2,6 +2,7 @@ from tkinter import *
 from PIL import Image, ImageTk
 from datetime import *
 import time
+import sys
 
 
 class Dashboard:
@@ -20,7 +21,7 @@ class Dashboard:
         self.header.place(x=300, y=0, width=1070, height=60)
 
         self.logout_text = Button(self.header, text='Logout', bg='#32cf8e', font=(
-            '', 13, 'bold'), bd=0, fg='white', cursor='hand2', activebackground='#32cf8e')
+            '', 13, 'bold'), bd=0, fg='white', cursor='hand2', activebackground='#32cf8e', command=closeWindow)
         self.logout_text.place(x=950, y=15)
 
         # ======================================  SIDEBAR ================================================ #
@@ -80,7 +81,7 @@ class Dashboard:
         self.exit.place(x=25, y=452)
 
         self.exit_text = Button(self.sidebar, text='Exit', bg='#ffffff', font=(
-            '', 13, 'bold'), bd=0, cursor='hand2', activebackground='#ffffff')
+            '', 13, 'bold'), bd=0, cursor='hand2', activebackground='#ffffff', command=closeWindow)
         self.exit_text.place(x=85, y=462)
 
         #  USER NAME
@@ -109,6 +110,10 @@ def win():
     window = Tk()
     Dashboard(window)
     window.mainloop()
+
+
+def closeWindow():
+    sys.exit()
 
 
 if __name__ == '__main__':
