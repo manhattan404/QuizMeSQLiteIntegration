@@ -36,13 +36,14 @@ class Login:
         self.password_entry.place(x=65, y=435)
         self.password_entry.insert(0, 'Password')
         self.password_entry.bind("<FocusIn>", self.clear_pass)  # on_enter)
-        self.password_entry.bind("<FocusOut>", self.clear_pass)  # on_leave)
+        self.password_entry.bind(
+            "<FocusOut>", self.leave_password)  # on_leave)
         self.password_entry_frame = Frame(
             self.loginwin, width=207, height=1, bg='#111111').place(x=65, y=460)
 
         # LOG IN BUTTON
         self.login_bttn = customtkinter.CTkButton(
-            master=self.loginwin, width=120, height=32, text="Login", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="white", bg_color="white", font=("Ebrima", 15), command=self.log_in)
+            master=self.loginwin, width=120, height=32, text="Login", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="white", bg_color="white", font=("Ebrima", 15), command=self.authenticate)
         self.login_bttn.place(x=107, y=490)
 
         # SIGN UP BUTTONS
@@ -67,29 +68,19 @@ class Login:
         if self.password_entry.get() == '':
             self.password_entry.insert(0, 'Password')
 
-    def log_in(self):
-        print('ITS WORKING')
-        Authenticate()
-
-
-class Authenticate:
-    def __init__(self):
+    def authenticate(self):
         self.conn = sqlite3.connect('users.db')
-        self.username = Login.user_entry.get()
-        self.password = Login.password_entry.get()
+        self.username = self.user_entry.get()
+        self.password = self.password_entry.get()
         self.c = self.conn.cursor()
+        self.c.execute("SELECT * FROM users WHERE username=? AND password=?",
+                       (self.username, self.password))
+        result = self.c.fetchone()
 
-        def authenticate_user():
-
-            self.c.execute("SELECT * FROM users WHERE username=? AND password=?",
-                           (self.username, self.password))
-            result = self.c.fetchone()
-
-            if result:
-                print("User authenticated!")
-
-            else:
-                print("Username or password is incorrect")
+        if result:
+            print("User authenticated!")
+        else:
+            print("Username or password is incorrect")
 
         self.conn.commit()
         self.conn.close()
