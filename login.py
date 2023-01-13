@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 from tkinter import messagebox
 import customtkinter
 from customtkinter import *
+import sqlite3
 
 
 class Login:
@@ -41,7 +42,7 @@ class Login:
 
         # LOG IN BUTTON
         self.login_bttn = customtkinter.CTkButton(
-            master=self.loginwin, width=120, height=32, text="Login", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="white", bg_color="white", font=("Ebrima", 15))
+            master=self.loginwin, width=120, height=32, text="Login", border_width=0, corner_radius=15, fg_color="#5F9DF7", border_color="white", text_color="white", bg_color="white", font=("Ebrima", 15), command=self.log_in)
         self.login_bttn.place(x=107, y=490)
 
         # SIGN UP BUTTONS
@@ -65,6 +66,33 @@ class Login:
     def leave_password(self, event):
         if self.password_entry.get() == '':
             self.password_entry.insert(0, 'Password')
+
+    def log_in(self):
+        print('ITS WORKING')
+        Authenticate()
+
+
+class Authenticate:
+    def __init__(self):
+        self.conn = sqlite3.connect('users.db')
+        self.username = Login.user_entry.get()
+        self.password = Login.password_entry.get()
+        self.c = self.conn.cursor()
+
+        def authenticate_user():
+
+            self.c.execute("SELECT * FROM users WHERE username=? AND password=?",
+                           (self.username, self.password))
+            result = self.c.fetchone()
+
+            if result:
+                print("User authenticated!")
+
+            else:
+                print("Username or password is incorrect")
+
+        self.conn.commit()
+        self.conn.close()
 
 
 def loginWin():
