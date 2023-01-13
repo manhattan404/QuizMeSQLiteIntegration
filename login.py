@@ -84,6 +84,7 @@ class Login:
 
         self.conn.commit()
         self.conn.close()
+        self.loginwin.destroy()
 
 
 def loginWin():
